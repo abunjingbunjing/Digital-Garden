@@ -1,24 +1,23 @@
-# Mockup
+# ASCII Garden Mockup Record
 
-Your prelim wireframes are finished and are not being redone. The mockup is what
-the app will actually look like: the wireframes painted in, with your real
-colours, type, spacing and content.
+The built interface is the current mockup. It has two screens and one responsive garden view.
 
-**This is submitted as images or a PDF.** A written description of a picture
-scores in the lowest band, because the thing being asked for is the picture.
+## Entry screen
 
-Put the exported images in `assets/` and link them here, so the repository
-carries them too.
+A compact signup/login panel uses the garden name as the first personal detail. It uses the same green and pink palette as the garden and has a clear error state for bad credentials.
 
-## What it should show
+## Garden screen
 
-- Every screen in your revised proposal, and no screens that are not in it
-- Real content, not "Lorem ipsum" and not "Title here"
-- The empty state of at least one screen, because that is the one people forget
-- What it looks like on a phone
+The header shows the garden name, username, current day, and Leave button. The main panel shows five garden beds, each with five stable slots. Locked beds remain visible so the checkpoint path is clear.
 
-## Honest note
+The side panel contains four methods: Plant, Water, Shovel, and Harvest. The Water row shows remaining daily charges. Farm Assistant text changes after actions and at later growth checkpoints.
 
-Anything in the mockup that is not in the built app by the end needs a sentence
-in your journal explaining what happened. That is a normal part of building
-something, and saying so reads far better than quietly shipping less.
+The collection section shows saved ASCII values beside flower graphics. Empty collection state is supported and says that harvested characters will appear there.
+
+## Responsive behavior
+
+At narrow widths, the garden and side panel stack. Beds become one column. Slot dimensions remain stable so character growth does not move neighboring controls.
+
+## Built versus planned
+
+The described entry screen, garden screen, empty collection state, method controls, locked beds, responsive layout, and collection view are implemented. A formal exported screenshot and deployed-site capture still need to be produced for the presentation submission.

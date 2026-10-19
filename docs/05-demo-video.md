@@ -1,33 +1,21 @@
-# Demo video
+# Demo Video Plan
 
-Three to five minutes, screen recorded, your own voice. Nobody watches ten.
+**Link:** [Google Drive.](https://drive.google.com/file/d/1Utglxou6i7E8Z6JILXGXuSKTV22MCAJk/view?usp=sharing)
 
-**Link:** (paste it here, and in the main README)
+## Run of show
 
-## The structure that always works
+1. **Opening, 30 seconds.** Introduce ASCII Garden as a personal garden where time changes characters even while the site is closed.
+2. **Account, 30 seconds.** Sign in with the prepared developer account. Do not show a password in the recording.
+3. **Garden flow, 90 seconds.** Point out the five beds, select Plant, show an existing high-value character, use Water on a test slot, and show the daily charge changing.
+4. **Harvest, 40 seconds.** Select Harvest, show the character entering the collection with its flower treatment and rarity.
+5. **Technical choice, 30 seconds.** Open `App.jsx` and explain elapsed-day calculation and stage classes. Open `server/db/schema.sql` and explain account-owned JSON state.
+6. **Honest close, 20 seconds.** Explain that local Docker, dependency, build, and protected-route checks pass, while hosted deployment and the final contrast review remain.
 
-1. **Thirty seconds.** What it is and who it is for. Show the app, not a slide.
-2. **Two to three minutes.** The main flow, end to end, on the **deployed** site,
-   with data you prepared in advance. Not an empty database, and not a form you
-   fill in slowly while talking.
-3. **Thirty seconds.** One thing you are proud of technically. Open one file and
-   explain a decision. This is where you show it is yours.
-4. **Thirty seconds.** One honest thing you would do differently. It is the
-   sentence that makes everything else credible.
+## Preparation checklist
 
-## Before you record
-
-- [ ] Open the site five minutes early so a free-tier API is awake
-- [ ] Record the **deployed** URL, not `localhost`
-- [ ] Close your other tabs. Check for personal messages, other students' names,
-      and any `.env` file open in an editor
-- [ ] Seed realistic data
-- [ ] Do a full practice run. If something breaks, stop and start again rather
-      than narrating the bug
-
-## Have a fallback
-
-In order of preference: a demo-mode build of the client, a recording of the
-working app, screenshots. A demo that fails with no fallback is a bad five
-minutes. A demo that fails where you say "here is the recording, and here is what
-went wrong" is a good one.
+- [ ] Record from a deployed URL after deployment.
+- [x] Prepare developer seed data locally.
+- [x] Confirm `/healthz` and `/readyz` locally.
+- [x] Confirm client production build.
+- [x] Capture a square project image: `docs/screenshots/ascii-garden-square.png.png`.
+- [ ] Record with personal credentials and environment files hidden.

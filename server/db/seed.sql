@@ -1,27 +1,55 @@
--- Sample data for development.
---
--- This starts with TRUNCATE. That is correct on your laptop and catastrophic
--- against the database your live demo depends on. Check which DATABASE_URL is
--- loaded before you run it.
-
-TRUNCATE TABLE sightings RESTART IDENTITY CASCADE;
-
-INSERT INTO sightings (place, description, spookiness, reported_at) VALUES
-  ('Library, third floor',
-   'Chairs rearranged overnight, every time. The night guard says he locks the room himself.',
-   3, now() - interval '12 days'),
-  ('Old gym',
-   'Lights flicker in a fixed pattern after 9pm, always three short and one long.',
-   4, now() - interval '10 days'),
-  ('Parking basement',
-   'Footsteps with no one there. Reported separately by three different people in one week, which is what makes this one hard to dismiss. Two of them were alone at the time and did not know about the others. This row is deliberately long, because a seed of four words hides every text-wrapping bug you have.',
-   5, now() - interval '8 days'),
-  ('Canteen',
-   'A cold spot near the back door, every morning before seven.',
-   1, now() - interval '7 days'),
-  ('AB Building stairwell',
-   '',
-   2, now() - interval '5 days'),
-  ('Chapel garden',
-   'Someone humming. Stops the moment you turn around.',
-   3, now() - interval '2 days');
+-- Developer-only local seed. Credentials: dev / garden123
+INSERT INTO gardens (id, username, password_hash, garden_name, started_at, state)
+VALUES (
+  'developer-garden',
+  'dev',
+  'ascii-garden-dev:ef3f4f1c9838242844625b2ccc722cc92d84216b5e37ac85e6e6672b01fc76b0a3d53c5edcfbde774982c17b46ac6bca32b5ecfcaee78c22b55f2a55fcecd21a',
+  'Developer Garden',
+  now() - interval '127 days',
+  $$
+  {
+    "lastWateredAt": null,
+    "waterUsed": 0,
+    "collection": [],
+    "beds": [
+      {"id":1,"locked":false,"slots":[
+        {"id":1,"plant":{"value":110,"watered":false}},
+        {"id":2,"plant":{"value":111,"watered":false}},
+        {"id":3,"plant":{"value":112,"watered":false}},
+        {"id":4,"plant":{"value":113,"watered":false}},
+        {"id":5,"plant":{"value":114,"watered":false}}
+      ]},
+      {"id":2,"locked":false,"slots":[
+        {"id":1,"plant":{"value":115,"watered":false}},
+        {"id":2,"plant":{"value":116,"watered":false}},
+        {"id":3,"plant":{"value":117,"watered":false}},
+        {"id":4,"plant":{"value":118,"watered":false}},
+        {"id":5,"plant":{"value":119,"watered":false}}
+      ]},
+      {"id":3,"locked":false,"slots":[
+        {"id":1,"plant":{"value":120,"watered":false}},
+        {"id":2,"plant":{"value":121,"watered":false}},
+        {"id":3,"plant":{"value":122,"watered":false}},
+        {"id":4,"plant":{"value":123,"watered":false}},
+        {"id":5,"plant":{"value":124,"watered":false}}
+      ]},
+      {"id":4,"locked":false,"slots":[
+        {"id":1,"plant":{"value":125,"watered":false}},
+        {"id":2,"plant":{"value":126,"watered":false}},
+        {"id":3,"plant":{"value":127,"watered":false}},
+        {"id":4,"plant":{"value":128,"watered":false}},
+        {"id":5,"plant":null}
+      ]},
+      {"id":5,"locked":false,"slots":[
+        {"id":1,"plant":null},{"id":2,"plant":null},{"id":3,"plant":null},{"id":4,"plant":null},{"id":5,"plant":null}
+      ]}
+    ]
+  }
+  $$::jsonb
+)
+ON CONFLICT (username) DO UPDATE SET
+  id = EXCLUDED.id,
+  password_hash = EXCLUDED.password_hash,
+  garden_name = EXCLUDED.garden_name,
+  started_at = EXCLUDED.started_at,
+  state = EXCLUDED.state;

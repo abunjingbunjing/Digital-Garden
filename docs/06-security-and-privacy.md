@@ -1,69 +1,29 @@
-# Security and privacy checklist
+# Security and Privacy Checklist
 
-Work through this **before your first push**, and again before you submit. It is
-short, none of it is exotic, and a grader can check most of it in two minutes.
+## Repository checks
 
-Your repository is public, in your own account, and permanent. That is the point
-of it, and it is also why this file exists.
+- [x] `.env` is ignored by `.gitignore`; local `client/.env` is not tracked.
+- [x] Run the final `git ls-files` credential scan; no credential-like tracked paths were found.
+- [x] `.env.example` files use placeholders and local development examples.
+- [x] No student identity data or real classmate data is used in seed data.
+- [ ] Rotate and verify all deployment credentials when hosting is configured.
 
-## Before the first push
+## Application checks
 
-- [ ] `.gitignore` includes `.env`, and `git check-ignore -v .env` confirms it
-- [ ] `git ls-files | grep -iE '\.env$|\.pem$|id_rsa'` prints nothing
-- [ ] `.env.example` is committed, with **placeholder** values only
-- [ ] No connection string, key or password anywhere in the repository,
-      including in a screenshot
-- [ ] No `student.json`, and no name, student number or email of yours or anyone
-      else's
-
-Deleting a file later does **not** remove it from the history. If you commit a
-credential, **rotate it first**, at the service, and clean up the history second.
-The rotation is the fix; the cleanup is hygiene.
-
-## The application
-
-- [ ] Every SQL query is parameterised. Values go in the array, never into the
-      string. This is one line of defence you already know how to do
-- [ ] Input is validated **on the server**, not only in React. Length limits on
-      every text field
-- [ ] `cors({ origin: allowedOrigins })` names your origins. Not `cors()` with no
-      options, which allows every site on the internet
-- [ ] `NODE_ENV=production` on the host, and no stack trace in any response body
-- [ ] `helmet` installed, which is one line for several real protections
-- [ ] Anything that costs money or accepts a password is rate limited
-- [ ] Passwords, if you have accounts, are hashed with bcrypt and never logged
-- [ ] Every route that touches somebody's data has the ownership check **in the
-      query**, as `AND user_id = $2`, not as an `if` above it
-- [ ] `npm audit` run once, and the easy fixes taken
-
-```bash
-npm install helmet
-```
-
-```js
-import helmet from 'helmet'
-app.use(helmet())
-```
+- [x] SQL values use parameterized query arguments.
+- [x] Signup input is validated on the server for username, password, and garden name.
+- [x] CORS uses an allowlist from `CORS_ORIGINS`.
+- [x] Server errors return a plain message instead of a stack trace.
+- [x] Add Helmet before public deployment.
+- [x] Add rate limiting to signup and login.
+- [x] Passwords are hashed with Node `scrypt` and are not logged.
+- [x] Add signed session tokens and enforce ownership in garden reads and writes.
+- [x] Run `npm audit` for both client and server; both report zero vulnerabilities.
 
 ## Privacy
 
-The half that matters more, because it is about other people.
+The application stores username, garden name, password hash, start time, and garden progress. It does not need classmates' names, email addresses, photos, or location. The developer seed account is invented and exists only for local testing.
 
-- [ ] **No real classmates' names, numbers, emails or photos**, anywhere. Not in
-      seed data, not in screenshots, not in the demo video. Consent for a course
-      project does not cover the next ten years of a public repository
-- [ ] Seed data is invented. Yours will be read
-- [ ] If real people tested your app, even three friends, their data is deleted
-      before you submit
-- [ ] If your app collects anything about anyone, the app says what it collects
-- [ ] Any face in a screenshot is stock, generated, or yours
+## Risk paragraph
 
-If your project handles personal information about real people, you are inside
-the Philippine Data Privacy Act. Collect the minimum, say what you collect, and
-do not collect anything you cannot justify.
-
-## What to write in your journal
-
-One short paragraph: the riskiest thing about your project from this list, what
-you did about it, and what you knowingly accepted. A student who can name the
-tradeoff they made scores better than one who claims there was none.
+The local smoke test confirmed that requests without a session receive 401 and that a signed session loads the correct garden.

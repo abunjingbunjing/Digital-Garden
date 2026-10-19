@@ -1,75 +1,11 @@
-// The simulated backend.
-//
-// Same function names, same return types, and the same shape of failure as
-// httpApi.js, so your components cannot tell the difference. Data lives in the
-// visitor's own browser and goes no further.
-//
-// This exists so the template's GitHub Pages link works on day one and so you
-// can build the interface before your API is deployed. It is NOT a finished
-// project. See content/extending-your-app page 3.
-
-import seed from './seed.json'
-
-const KEY = 'final-project:sightings'
-
-// A real network is not instant. Keeping this delay is what forces you to build
-// a loading state now, while it is cheap, instead of discovering you need one
-// the day you switch to the real API.
-const delay = (ms = 250) => new Promise((resolve) => setTimeout(resolve, ms))
-
-function read() {
-  const stored = localStorage.getItem(KEY)
-  if (stored) {
-    try {
-      return JSON.parse(stored)
-    } catch {
-      // Corrupted storage. Start again rather than crashing the app.
-      localStorage.removeItem(KEY)
-    }
-  }
-  localStorage.setItem(KEY, JSON.stringify(seed))
-  return seed
+const KEY = 'ascii-garden:account'
+const delay = (ms = 180) => new Promise((resolve) => setTimeout(resolve, ms))
+function read() { try { return JSON.parse(localStorage.getItem(KEY) || 'null') } catch { return null } }
+function write(account) { localStorage.setItem(KEY, JSON.stringify(account)); return account }
+function emptyGarden(username, gardenName) {
+  return { id: crypto.randomUUID(), username, gardenName, startedAt: new Date().toISOString(), lastWateredAt: null, waterUsed: 0, collection: [], beds: Array.from({ length: 5 }, (_, bed) => ({ id: bed + 1, locked: bed > 0, slots: Array.from({ length: 5 }, (_, slot) => ({ id: slot + 1, plant: null })) })) }
 }
-
-function write(rows) {
-  localStorage.setItem(KEY, JSON.stringify(rows))
-  return rows
-}
-
-export async function listSightings() {
-  await delay()
-  return read().slice().sort((a, b) => b.reported_at.localeCompare(a.reported_at))
-}
-
-export async function getSighting(id) {
-  await delay()
-  const found = read().find((row) => String(row.id) === String(id))
-  if (!found) throw new Error('Not found')
-  return found
-}
-
-export async function createSighting(input) {
-  await delay()
-  const created = {
-    ...input,
-    id: crypto.randomUUID(),
-    reported_at: new Date().toISOString(),
-  }
-  write([...read(), created])
-  return created
-}
-
-export async function updateSighting(id, input) {
-  await delay()
-  const rows = read()
-  const index = rows.findIndex((row) => String(row.id) === String(id))
-  if (index === -1) throw new Error('Not found')
-  rows[index] = { ...rows[index], ...input }
-  write(rows)
-  return rows[index]
-}
-
-export async function deleteSighting(id) {
-  await delay()
-  write(read().filter((row) => String(row.id) !== String(id)))
-}
+export async function signup(input) { await delay(); if (read()) throw new Error('A garden already lives in this browser. Log in or clear demo data.'); const garden = emptyGarden(input.username.trim(), input.gardenName.trim()); write({ ...garden, password: input.password }); return garden }
+export async function login(input) { await delay(); const account = read(); if (!account || account.username !== input.username || account.password !== input.password) throw new Error('Username or password is not correct.'); const { password, ...garden } = account; return garden }
+export async function getGarden() { await delay(); const account = read(); if (!account) throw new Error('No garden found.'); const { password, ...garden } = account; return garden }
+export async function saveGarden(garden) { await delay(); const account = read(); if (!account) throw new Error('No garden found.'); write({ ...garden, password: account.password }); return garden }

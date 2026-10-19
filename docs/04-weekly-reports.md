@@ -1,27 +1,13 @@
-# Weekly reports
+# Weekly Reports
 
-Five minutes a week. Add a new section at the top; never edit an old one.
+## Week of 2026-10-18
 
-The value is entirely in writing them **while it is happening**. What took four
-hours and why is invisible a month later, and it is exactly what your journal
-needs.
+**Done.** Replaced the sightings template with ASCII Garden. Added signup/login, elapsed-day growth, five beds with checkpoint locks, five slots per bed, Plant/Water/Shovel/Harvest actions, collection storage, mock persistence, HTTP API wiring, PostgreSQL schema, password hashing, Docker readiness, responsive styling, Twemoji flower assets, and developer seed data.
 
----
+**Checked.** `npm run build` passes. `node --check` passes for the server files. Docker `/healthz` returns `{"ok":true}` and `/readyz` returns `{"ok":true,"db":"up"}`. The developer seed query found five unlocked beds and values 110 through 128.
 
-## Week of YYYY-MM-DD
+**Stuck.** The public deployment is not configured. Session, ownership, Helmet, and rate-limit checks now pass locally, but `SESSION_SECRET` still needs secure host configuration.
 
-**Done.** What actually works now, in the deployed app rather than on your laptop.
+**Hours.** Not recorded contemporaneously. This report is reconstructed from the implementation and local checks, so the estimate should not be treated as precise.
 
-**Stuck.** What is not working, and the most specific description you can give.
-"CORS" is not specific. "The preflight OPTIONS returns 404 because my router is
-mounted above cors" is.
-
-**Hours.** Roughly. You will need this to estimate anything, ever.
-
-**Next.** One or two things, not a wish list.
-
----
-
-## Week of YYYY-MM-DD
-
-...
+**Next.** Configure the hosted secret, run a hosted smoke test, complete the contrast review, and capture the required presentation assets.

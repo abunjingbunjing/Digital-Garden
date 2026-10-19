@@ -1,33 +1,36 @@
-# Design system
+# ASCII Garden Design System
 
-The rules your interface follows, written down, so that screen four looks like
-screen one.
+## Visual direction
 
-**Part of this is a visual document**, submitted as a PDF or images. Swatches,
-type samples and component states, not paragraphs describing them.
+The garden uses a soft green paper field, darker leaf green for actions, warm soil brown for slots, and pink for flowers and collection emphasis. Pixel grids and small repeated marks give the page a garden-notebook quality without making the controls decorative first.
 
-## What to record
+## Color tokens
 
-**Colour.** Every colour, with its hex value and the name you use for it in code.
-Check text against its background for contrast; the WCAG minimum is 4.5 to 1 for
-normal text, and it is checked.
+| Token | Hex | Use |
+| --- | --- | --- |
+| `--ink` | `#173D2A` | main text |
+| `--muted` | `#5D7666` | labels and supporting text |
+| `--line` | `#BAD4C0` | borders |
+| `--paper` | `#EEF6E9` | page background |
+| `--panel` | `#FBFFF8` | panels |
+| `--leaf` | `#1F7048` | actions and active state |
+| `--soil` | `#6C4C34` | plant slots |
+| `--pink` | `#D85B78` | flower accents and remaining-water emphasis |
 
-**Type.** The family, and the sizes you actually use, each with a name. Three or
-four sizes is plenty.
+These tokens live in `client/src/styles.css`. Contrast still needs a formal WCAG audit before public submission.
 
-**Spacing.** One scale, and stick to it. Numbers chosen at random per component
-is the single most common reason a student project looks unfinished.
+## Type
 
-**Components.** For each reusable piece: what it looks like normally, on hover,
-focused, disabled, and while loading. **Focus states are not optional**: removing
-an outline without replacing it makes your app unusable with a keyboard.
+- Space Grotesk: headings and normal interface text.
+- DM Mono: ASCII values, labels, slot metadata, and technical counters.
+- Display heading: responsive `clamp()` size, capped so it does not crowd controls.
 
-**States.** Loading, empty, error and data are four different screens. Decide what
-each looks like once, here, rather than improvising per page.
+## Components and states
 
-## In code
+- Buttons: green primary action, transparent text action, active method with left border, disabled locked slot.
+- Slots: fixed five-column grid, soil background, readable character layer, and stage-specific roots or leaves.
+- Collection cards: flower image, ASCII value, rarity, and harvest date.
+- Feedback: loading screen, inline error, empty collection, and action message in Farm Assistant.
+- Focus: browser focus remains available; no custom rule removes it.
 
-Say where these live: CSS custom properties, a Tailwind config, a theme object, a
-component library you configured. The template starts with custom properties in
-`client/src/styles.css`. Module 3 covered the alternatives; use the one you can
-defend.
+Spacing uses small multiples of 4px, with 7px slot gaps, 13px bed padding, 18px layout gaps, and 22px panel padding.
